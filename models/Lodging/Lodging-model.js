@@ -1,38 +1,38 @@
 const mongoose = require('mongoose');
 
-const articleSchema = new mongoose.Schema({
+const lodgingSchema = new mongoose.Schema({
     title : {
         type : String,
         required : true,
         trim : true
     },
-    about : {
-        type : String,
-        default : ''
-    },
-    description : {
+    location : {
         type : String,
         required : true,
         trim : true
     },
-    author : {
+    state : {
         type : String,
-        default : 'Hichem Meniaoui',
+        required : true,
         trim : true
     },
-    imageURL : {
-        type : String,
-        default : '/images/articles/default.jpg'
+    area : {
+        type : double,
+        required : true,
+    },
+    Construction_year : {
+        type : integer,
+        required : true
     }
 } , {timestamps : true});
 
-articleSchema.methods.toJSON = function () {
-const articleObject = this.toObject();
-articleObject.id = articleObject._id;
-delete articleObject._id;
-delete articleObject.__v;
-return articleObject;
+lodgingSchema.methods.toJSON = function () {
+const lodgingObject = this.toObject();
+lodgingObject.id = lodgingObject._id;
+delete lodgingObject._id;
+delete lodgingObject.__v;
+return lodgingObject;
 }
 
-const Article = mongoose.model('Article',articleSchema);
-module.exports = Article;
+const Lodging = mongoose.model('Lodging',lodgingSchema);
+module.exports = Lodging;
