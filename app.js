@@ -4,7 +4,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 require('./database/mongoose');
-const clientRouter = require('./routes/client-router');
+const userRouter = require('./routes/user-router');
+const agencyRouter = require('./routes/agency-router');
 const adminRouter = require('./routes/admin-router');
 const visitorRouter = require('./routes/visitor-router');
 
@@ -31,7 +32,8 @@ app.use('/images/articles', express.static(path.join(__dirname, 'public/images/a
 app.use('/join-us/cv', express.static(path.join(__dirname, 'public/join-us-cv')));
 
 
-app.use(clientRouter);
+app.use(userRouter);
+app.use(agencyRouter);
 app.use(adminRouter);
 app.use(visitorRouter);
 

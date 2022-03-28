@@ -11,7 +11,7 @@ const managePartnersController = require('../controllers/admin/manage-partner-co
 const manageArticlesController = require('../controllers/admin/manage-articles-controller');
 const manageEventsController = require('../controllers/admin/manage-events-controller');
 const manageTeamMembersController = require('../controllers/admin/manage-team-members-controller');
-const manageServicesController = require('../controllers/client/manage-services-controller');
+const manageServicesController = require('../controllers/user/manage-services-controller');
 const manageContactUsController = require('../controllers/visitor/manage-contact-us-controller');
 
 const router = new express.Router();

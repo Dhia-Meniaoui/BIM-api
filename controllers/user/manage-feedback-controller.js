@@ -1,4 +1,4 @@
-const Feedback = require('../../models/feedback-model');
+const Feedback = require('../../models/Notifications/feedback-model');
 
 // Get feedback  { client,authToken => feedback }
 const getFeedback = async function (req, res) {

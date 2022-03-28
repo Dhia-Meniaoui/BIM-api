@@ -1,10 +1,10 @@
 const express = require('express');
 
 const authClient = require('../middleware/authentication').authClient;
-const signController = require('../controllers/client/sign-up-in-out-controller');
-const manageAccountController = require('../controllers/client/manage-account-controller');
-const manageFeedbackController = require('../controllers/client/manage-feedback-controller');
-const manageServicesController = require('../controllers/client/manage-services-controller');
+const signController = require('../controllers/user/sign-up-in-out-controller');
+const manageAccountController = require('../controllers/user/manage-account-controller');
+const manageFeedbackController = require('../controllers/user/manage-feedback-controller');
+const manageServicesController = require('../controllers/user/manage-services-controller');
 
 const router = new express.Router();
 

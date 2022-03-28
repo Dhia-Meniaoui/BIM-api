@@ -3,25 +3,18 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const validator = require('validator').default;
 
-// Define the schema for the client
-const clientSchema = new mongoose.Schema({
+
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
         trim: true,
     },
-    clientID: {
-        // verify with khawla how should clientID be
-        required: true,
-        unique: true,
-        type: String,
-        trim: true
-    },
     phone: {
-      required : false,
+        required : false,
         type : String,
         trim : true,
-      default : ''
+        default : ''
     },
     email: {
         type: String,
@@ -59,59 +52,59 @@ const clientSchema = new mongoose.Schema({
     }]
 }, {timestamps: true});
 
-clientSchema.virtual('feedback', {
+userSchema.virtual('feedback', {
     ref: 'Feedback',
     localField: '_id',
     foreignField: 'owner'
 });
 
-clientSchema.virtual('maintenanceRequest', {
+userSchema.virtual('maintenanceRequest', {
     ref: 'MaintenanceRequest',
     localField: '_id',
     foreignField: 'owner'
 });
 
-clientSchema.virtual('qualityControl', {
+userSchema.virtual('qualityControl', {
     ref: 'QualityControl',
     localField: '_id',
     foreignField: 'owner'
 });
 
-// Hash password before saving a client
-clientSchema.pre('save', async function (next) {
-    const client = this;
-    if (client.isModified('password')) {
-        client.password = await bcrypt.hash(client.password, 8);
+// Hash password before saving a user
+userSchema.pre('save', async function (next) {
+    const user = this;
+    if (user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 8);
     }
     next();
 });
 
 // Find by email and check password
-clientSchema.statics.findByCredentials = async function (email, password) {
-    const client = await Client.findOne({email: email});
-    if (!client) {
+userSchema.statics.findByCredentials = async function (email, password) {
+    const user = await user.findOne({email: email});
+    if (!user) {
         throw new Error('Unable to login');
     }
-    const isMatch = await bcrypt.compare(password, client.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
         throw new Error('Unable to login');
     }
     // reaching this line means that email exists with the given password
-    return client;
+    return user;
 };
 
-// Generate token for created or signed clients
-clientSchema.methods.generateAuthToken = async function () {
-    const client = this;
+// Generate token for created or signed user
+userSchema.methods.generateAuthToken = async function () {
+    const user = this;
     try {
-        return await jwt.sign({id: client.id}, '9ar9ouch');
+        return await jwt.sign({id: user.id}, '9ar9ouch');
     } catch (error) {
         return {error: 'Unable to generate authentication token!'}
     }
 }
 
-// Delete unnecessary (for the client) fields from the client object returned to client
-clientSchema.methods.toJSON = function () {
+// Delete unnecessary (for the user) fields from the user object returned to user
+userSchema.methods.toJSON = function () {
     const userObject = this.toObject();
     userObject.id = userObject._id;
     delete userObject._id;
@@ -122,5 +115,5 @@ clientSchema.methods.toJSON = function () {
     return userObject;
 }
 
-const Client = mongoose.model('Client', clientSchema);
-module.exports = Client;
+const User = mongoose.model('User', userSchema);
+module.exports = User;

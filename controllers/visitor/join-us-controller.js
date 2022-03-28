@@ -1,5 +1,5 @@
 const multer = require('multer');
-const Joiner = require('../../models/join-us-model');
+const Joiner = require('../../models/Notifications/join-us-model');
 const partner = require('../../models/partenaire');
 
 

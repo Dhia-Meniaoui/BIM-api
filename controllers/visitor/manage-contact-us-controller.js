@@ -1,4 +1,4 @@
-const ContactUs = require('../../models/contact-us-model');
+const ContactUs = require('../../models/Notifications/contact-us-model');
 
 // add a contact us form  { contact us body => none }
 const addContactUs = async function (req, res) {
