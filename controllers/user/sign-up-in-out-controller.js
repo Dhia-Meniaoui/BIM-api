@@ -1,45 +1,45 @@
-const Client = require('../../models/client-model');
+const User = require('../../models/Users/User-model');
 
 
-// Sign up a new Client { client info => client info ,token }
+// Sign up a new User { User info => User info ,token }
 const signUp = async function (req, res) {
-    let client;
-    client = new Client(req.body);
+    let user;
+    user = new User(req.body);
     try {
-        const token = await client.generateAuthToken();
-        client.tokens.push({token});
-        await client.save();
-        res.status(201).send({client, token});
+        const token = await user.generateAuthToken();
+        user.tokens.push({token});
+        await user.save();
+        res.status(201).send({user, token});
     } catch (error) {
         res.status(400).send({error: error.toString()});
     }
 };
 
-// Sign in a client  { email,password => client info,token }
+// Sign in a user  { email,password => user info,token }
 const signIn = async function (req, res) {
     try {
-        const client = await Client.findByCredentials(req.body.email, req.body.password);
-        if (client.isBanned) {
+        const user = await User.findByCredentials(req.body.email, req.body.password);
+        if (user.isBanned) {
             throw new Error('This account has been banned')
         }
-        const token = await client.generateAuthToken();
-        client.tokens.push({token});
-        await client.updateOne({tokens: client.tokens});
-        res.status(200).send({client, token});
+        const token = await user.generateAuthToken();
+        user.tokens.push({token});
+        await user.updateOne({tokens: user.tokens});
+        res.status(200).send({user, token});
     } catch (error) {
         console.log(error)
         res.status(400).send({error: error.toString().replace('Error: ', '')});
     }
 };
 
-// Sign out a client  { client,authToken => none }
+// Sign out a user  { user,authToken => none }
 const signOut =  async function (req, res) {
     try {
-        let clientTokens = req.client.tokens;
-        clientTokens = clientTokens.filter((token) => {
+        let userTokens = req.user.tokens;
+        userTokens = userTokens.filter((token) => {
             return token.token !== req.token;
         });
-        await req.client.updateOne({tokens: clientTokens});
+        await req.user.updateOne({tokens: userTokens});
         res.status(200).send();
     } catch (error) {
         res.status(500).send();

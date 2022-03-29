@@ -1,1 +1,0 @@
-"C:\Users\ahmed\MongoDB\Server\4.2\bin\mongod.exe" --dbpath="C:\Users\ahmed\MongoDB\Server\4.2\data"

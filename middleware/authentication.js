@@ -1,15 +1,16 @@
 const jwt = require('jsonwebtoken');
-const Client = require('../models/client-model');
-const Admin = require('../models/admin-model');
+const User = require('../models/Users/User-model');
+const Agency = require('../models/Users/Agency-model');
+const Admin = require('../models/Users/admin-model');
 
-// Authenticate a client  { req => token,user }
-const authClient = async function (req, res, next) {
+// Authenticate a user  { req => token,user }
+const authUser = async function (req, res, next) {
     try {
         const token = req.header('Authorization').replace('Bearer ', '');
         const decode = await jwt.verify(token, '9ar9ouch');
-        const client = await Client.findOne({_id: decode.id, 'tokens.token': token});
-        if (client) {
-            req.client = client;
+        const user = await User.findOne({_id: decode.id, 'tokens.token': token});
+        if (user) {
+            req.user = user;
             req.token = token;
             next();
         } else {
@@ -19,6 +20,26 @@ const authClient = async function (req, res, next) {
         res.status(401).send({error: 'please authenticate'});
     }
 }
+
+
+// Authenticate an agency  { req => token,agency }
+const authAgency = async function (req, res, next) {
+    try {
+        const token = req.header('Authorization').replace('Bearer ', '');
+        const decode = await jwt.verify(token, '9ar9ouch');
+        const agency = await Agency.findOne({_id: decode.id, 'tokens.token': token});
+        if (agency) {
+            req.agency = agency;
+            req.token = token;
+            next();
+        } else {
+            throw new Error();
+        }
+    } catch (error) {
+        res.status(401).send({error: 'please authenticate'});
+    }
+}
+
 
 const authAdmin = async function (req, res, next) {
     try {
@@ -38,4 +59,4 @@ const authAdmin = async function (req, res, next) {
     }
 }
 
-module.exports = {authClient,authAdmin};
+module.exports = {authUser,authAdmin,authAgency};

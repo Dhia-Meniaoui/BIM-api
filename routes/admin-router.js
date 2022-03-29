@@ -3,15 +3,12 @@ const express = require('express');
 const authAdmin = require('../middleware/authentication').authAdmin;
 const signController = require('../controllers/admin/sign-up-login-logout-controller');
 const manageAdminAccountController = require('../controllers/admin/manage-admin-account-controller');
-const clientsManagementController = require('../controllers/admin/manage-clients-controller');
-const testsManagementController = require('../controllers/admin/manage-tests-controller');
-const manageAccessoriesController = require('../controllers/admin/manage-accessories-controller');
+const UsersManagementController = require('../controllers/admin/manage-clients-controller');
+const AgenciesManagementController = require('../controllers/admin/manage-tests-controller');
 const manageJoinUsController = require('../controllers/admin/manage-join-us-controller');
-const managePartnersController = require('../controllers/admin/manage-partner-controller');
 const manageArticlesController = require('../controllers/admin/manage-articles-controller');
-const manageEventsController = require('../controllers/admin/manage-events-controller');
 const manageTeamMembersController = require('../controllers/admin/manage-team-members-controller');
-const manageServicesController = require('../controllers/user/manage-services-controller');
+const manageOffersController = require('../controllers/user/manage-offers-controller');
 const manageContactUsController = require('../controllers/visitor/manage-contact-us-controller');
 
 const router = new express.Router();
@@ -38,43 +35,28 @@ router.post('/admin/logout', authAdmin, signController.signOut);
 router.patch('/admin', authAdmin, manageAdminAccountController.updateAccount);
 
 /* =============================
-    Manage clients
+    Manage users 
    =============================*/
 
-// Ban a client
-router.post('/banClient/:id', authAdmin, clientsManagementController.banClient);
+// Ban a user
+router.post('/Users/ban/:id', authAdmin, UsersManagementController.banUser);
 
+// delete a user
+router.delete('/Users/delete/:id', authAdmin, UsersManagementController.deleteUser);
 
 /* =============================
-    Manage tests
+    Manage agency 
    =============================*/
 
-// Validate a test
-router.post('/tests/validate/:id', authAdmin, testsManagementController.validateTest);
+// Ban an agency
+router.post('/Agencies/ban/:id', authAdmin, AgenciesManagementController.banAgencie);
 
+// delete an agency
+router.delete('/agencies/delete/:id', authAdmin, AgenciesManagementController.deleteAgencie);
 
-/* =============================
-    Manage accessories
-   =============================*/
+// turn an agency to a partner
+router.patch('/agencies/partner/:id', authAdmin, AgenciesManagementController.partnerAgencie);
 
-// Add accessorie
-router.post('/accessories', authAdmin,
-    manageAccessoriesController.uploadImage.array('image[]'),
-    manageAccessoriesController.addAccessorie,
-    manageAccessoriesController.addAccessorieErrorCatcher);
-
-// Get accessorie
-router.get('/accessories/:id', manageAccessoriesController.getOneAccessorie);
-
-// Get all accessories  { none => accessories }
-router.get('/accessories', manageAccessoriesController.getAllAccessories);
-// Update Accessorie
-router.patch('/accessories/:id', authAdmin,
-    manageAccessoriesController.uploadImage.single('image'),
-    manageAccessoriesController.updateAccessorie,
-    manageAccessoriesController.addAccessorieErrorCatcher);
-// Delete accessorie
-router.delete('/accessories/:id', authAdmin, manageAccessoriesController.deleteAccessorie);
 
 /* =============================
     Manage joins-us applications
@@ -90,17 +72,6 @@ router.get('/join-us/all',  authAdmin, manageJoinUsController.getAllApplications
 router.get('/join-us/:id', authAdmin, manageJoinUsController.getOneApplication);
 
 
-
-
-/* =============================
-    Manage partners applications
-   =============================*/
-
-// Get all partners 
-router.get('/partners/all',  authAdmin, managePartnersController.getAllPartners);
-
-// delete partner
-router.delete('/partners/:id', authAdmin, managePartnersController.deletePartners);
 
 
 
@@ -137,23 +108,6 @@ router.patch('/articles/:id',
 // Delete an article
 router.delete('/articles/:id', authAdmin, manageArticlesController.deleteArticle);
 
-/* =============================
-    Manage coming events
-   =============================*/
-
-// Add a coming event
-router.post('/events', authAdmin, manageEventsController.addEvent);
-
-// get one coming event
-router.get('/events/:id', manageEventsController.getOneEvent);
-
-// get many coming events
-// /events  => get all events
-// /events?limit=X  => get the first X events
-router.get('/events', manageEventsController.getManyEvents);
-
-// delete coming event
-router.delete('/events/:id', authAdmin, manageEventsController.deleteEvent);
 
 /* =============================
     Manage team Members
@@ -182,36 +136,15 @@ router.patch('/members/:id',
 router.delete('/members/:id', authAdmin, manageTeamMembersController.deleteTeamMember);
 
 /* =============================
-    Manage services
+    Manage prediction
    =============================*/
 
-// get maintenance requests
-/*
-      /maintenance  => get all maintenance requests
-     /maintenance?fixed=true  => get fixed maintenance requests
-    /maintenance?fixed=false  => get unfixed maintenance requests
+// get an offer prediction 
+router.get('/predictions/:id', authAdmin, manageoffersprediction.getpredictionRequests);
 
- */
-router.get('/services/maintenance', authAdmin, manageServicesController.getMaintenanceRequests);
+// set a prediction request to the lambda function AWS
+router.post('/prediction/offer/:id', authAdmin, manageoffersprediction.postpredictionRequests);
 
-// set a maintenance request as fixed
-router.post('/services/maintenance/fixed/:id',
-    authAdmin,
-    manageServicesController.setMaintenanceRequestFixed);
-
-
-// Get scheduled quality controls
-/*
-    /services/qualityControl  , Get all scheduled quality controls for all clients
-    /services/qualityControl?days=X  , Get scheduled quality controls for all clients for next X days
- */
-router.get('/services/qualityControl', authAdmin, manageServicesController.getQualityControlsByAdmin);
-
-// get on hold training requests
-router.get('/services/training', authAdmin, manageServicesController.getTrainingSessionRequests);
-
-// Set Training session requests as not in hold anymore
-router.post('/services/training/:id', authAdmin, manageServicesController.setTrainingSessionAsDone);
 
 /* =============================
     Manage contact us messages
@@ -222,5 +155,18 @@ router.get('/contacts', authAdmin, manageContactUsController.getAllContactUs);
 
 // delete a contact us message
 router.delete('/contacts/:id', authAdmin, manageContactUsController.deleteContactUsMessage);
+
+/* =============================
+    Manage offers
+   =============================*/
+
+// update an offer request
+router.patch('/offers/:id', authAdmin, manageOffersController.updateOfferRequest);
+
+// Get all the offers 
+router.get('/offers', authAdmin, manageOffersController.getOffersRequest);
+
+// Get an offer 
+router.get('/offer/details/:id', authAdmin, manageOffersController.getOfferRequest);
 
 module.exports = router;

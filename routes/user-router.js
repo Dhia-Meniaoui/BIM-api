@@ -1,63 +1,65 @@
 const express = require('express');
 
-const authClient = require('../middleware/authentication').authClient;
+const authUser = require('../middleware/authentication').authUser;
 const signController = require('../controllers/user/sign-up-in-out-controller');
 const manageAccountController = require('../controllers/user/manage-account-controller');
 const manageFeedbackController = require('../controllers/user/manage-feedback-controller');
-const manageServicesController = require('../controllers/user/manage-services-controller');
+const manageOffersController = require('../controllers/user/manage-offers-controller');
 
 const router = new express.Router();
 
 
 /* =============================
-    Client sign-up-in-out
+    user sign-up-in-out
    =============================*/
 
-// Sign in a client
-router.post('/clients/login', signController.signIn);
+// Sign in a user
+router.post('/users/login', signController.signIn);
 
-// Sign up a new Client
-router.post('/clients', signController.signUp);
+// Sign up a new user
+router.post('/users', signController.signUp);
 
-// Sign out a client
-router.post('/clients/logout', authClient, signController.signOut);
+// Sign out a user
+router.post('/users/logout', authUser, signController.signOut);
 
 
-/* =============================
+/* ============================= 
     Manage account
-   =============================*/
+   =============================*/ 
 
 // Delete currently logged account
-router.delete('/clients', authClient, manageAccountController.deleteAccount);
+router.delete('/users', authUser, manageAccountController.deleteAccount);
 
 // Update currently logged account
-router.put('/clients', authClient, manageAccountController.updateAccount);
+router.put('/users', authUser, manageAccountController.updateAccount);
 
 /* =============================
     Manage feedback
    =============================*/
 
 // Post a feedback
-router.post('/feedback', authClient, manageFeedbackController.addFeedback);
+router.post('/feedback', authUser, manageFeedbackController.addFeedback);
 
-// Get a feedback
-router.get('/feedback', authClient, manageFeedbackController.getFeedback);
+// Delete a feedback
+router.delete('/feedback/:id', authUser, manageFeedbackController.deleteFeedback);
 
 /* =============================
-    Manage services
+    Manage offers
    =============================*/
 
-// Get a maintenance request
-router.post('/services/maintenance', authClient, manageServicesController.addMaintenanceRequest);
+// update an offer request
+router.patch('/offers/:id', authUser, manageOffersController.updateOfferRequest);
 
-// add quarterly control years
-router.post('/services/control', authClient, manageServicesController.addQualityControlYears);
+// Add an offer request
+router.post('/offer', authUser, manageOffersController.addOfferRequest);
 
-// Get scheduled quality controls for the next period for the logged client
-router.get('/services/control', authClient, manageServicesController.getQualityControlsByClient);
+// Get all the offers 
+router.get('/offers', authUser, manageOffersController.getOffersRequest);
 
-// Add a training session request
-router.post('/services/training', authClient, manageServicesController.addTrainingSessionRequest);
+// Get an offer 
+router.get('/offer/details/:id', authUser, manageOffersController.getOfferRequest);
+
+
 
 
 module.exports = router;

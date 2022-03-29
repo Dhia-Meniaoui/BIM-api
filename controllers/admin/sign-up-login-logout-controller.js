@@ -1,4 +1,4 @@
-const Admin = require('../../models/admin-model');
+const Admin = require('../../models/Users/admin-model');
 
 
 // Sign up an Admin { admin info => admin info ,token }
