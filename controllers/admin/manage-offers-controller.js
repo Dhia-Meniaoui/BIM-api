@@ -37,11 +37,6 @@ const addOffer = async function (req, res) {
     }
 };
 
-// This function will catch the errors thrown by uploadImage() function , it must have 4 parameters
-const addOfferRequestErrorCatcher = function (error, req, res, next) {
-    res.status(400).send({error: error.message});
-};
-
 // Get accessorie  { accessorie's id => accessorie }
 const getOneOffer = async function (req, res) {
     try {
@@ -66,29 +61,6 @@ const getAllOffers = async function (req, res) {
     }
 };
 
-// Update accessorie  { admin,authToken,accessorie's ID , update body => updated accessorie }
-const updateOffer = async function (req, res) {
-    const updatesAllowed = ['name', 'description', 'price', 'isAvailable'];
-    const updatesRequested = Object.keys(req.body);
-    const isValidUpdate = updatesRequested.every((update) => {
-        return updatesAllowed.includes(update);
-    });
-    if (!isValidUpdate) {
-        return res.status(400).send({error: 'update not valid'});
-    }
-    if (req.file) { 
-        req.body.imageURL = '/images/accessories/' + req.file.filename
-    }
-    try {
-        const updatedOffer = await Offer.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true
-        });
-        updatedOffer ? res.status(200).send(updatedOffer) : res.status(404).send();
-    } catch (error) {
-        res.status(400).send();
-    }
-}
 
 // Delete accessorie  { admin,authToken,accessorie's ID => none }
 const deleteOffer = async function (req, res) {
@@ -103,9 +75,7 @@ const deleteOffer = async function (req, res) {
 module.exports = {
     uploadImage,
     addOffer,
-    addOfferRequestErrorCatcher,
     getOneOffer,
     getAllOffers,
-    deleteOffer,
-    updateOffer
+    deleteOffer
 }

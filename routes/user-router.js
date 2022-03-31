@@ -40,24 +40,30 @@ router.put('/users', authUser, manageAccountController.updateAccount);
 // Post a feedback
 router.post('/feedback', authUser, manageFeedbackController.addFeedback);
 
-// Delete a feedback
+/* // Delete a feedback
 router.delete('/feedback/:id', authUser, manageFeedbackController.deleteFeedback);
+ */
+// get a feedback
+router.get('/feedback/:id', authUser, manageFeedbackController.getFeedback);
 
 /* =============================
     Manage offers
    =============================*/
 
 // update an offer request
-router.patch('/offers/:id', authUser, manageOffersController.updateOfferRequest);
+router.patch('/offers/:id', authUser, manageOffersController.updateOffer);
 
 // Add an offer request
-router.post('/offer', authUser, manageOffersController.addOfferRequest);
+router.post('/offer', authUser, manageOffersController.addOffer);
 
 // Get all the offers 
-router.get('/offers', authUser, manageOffersController.getOffersRequest);
+router.get('/offers', authUser, manageOffersController.getAllOffers);
 
 // Get an offer 
-router.get('/offer/details/:id', authUser, manageOffersController.getOfferRequest);
+router.get('/offer/details/:id', authUser, manageOffersController.getOneOffer);
+
+// Delete an offer 
+router.delete('/offer/:id', authUser, manageOffersController.deleteOffer);
 
 
 

@@ -1,10 +1,10 @@
 const express = require('express');
 
 const authAgency = require('../middleware/authentication').authAgency;
-const signController = require('../controllers/user/sign-up-in-out-controller');
-const manageAccountController = require('../controllers/user/manage-account-controller');
-const manageFeedbackController = require('../controllers/user/manage-feedback-controller');
-const manageServicesController = require('../controllers/user/manage-offers-controller');
+const signController = require('../controllers/agency/sign-up-in-out-controller');
+const manageAccountController = require('../controllers/agency/manage-account-controller');
+const manageFeedbackController = require('../controllers/agency/manage-feedback-controller');
+const manageOffersController = require('../controllers/agency/manage-offers-controller');
 
 const router = new express.Router();
 
@@ -46,22 +46,25 @@ router.get('/feedback', authAgency, manageFeedbackController.getFeedback);
    =============================*/
 
 // update an offer request
-router.patch('/offers/:id', authAgency, manageOffersController.updateOfferRequest);
+router.patch('/offers/:id', authAgency, manageOffersController.updateOffer);
 
 // Add an offer request
-router.post('/offer', authAgency, manageOffersController.addOfferRequest);
+router.post('/offer', authAgency, manageOffersController.addOffer);
 
 // Get all the offers 
-router.get('/offers', authAgency, manageOffersController.getOffersRequest);
+router.get('/offers', authAgency, manageOffersController.getAllOffers);
 
 // Get an offer 
-router.get('/offer/details/:id', authAgency, manageOffersController.getOfferRequest);
+router.get('/offer/details/:id', authAgency, manageOffersController.getOneOffer);
+
+// Delete an offer 
+router.delete('/offer/:id', authAgency, manageOffersController.deleteOffer);
 
 
 /* =============================
     partner request 
    =============================*/
 
-router.post('/partner',partnerController.applypartenaire);
-
+/* router.post('/partner',partnerController.applypartenaire);
+ */
 module.exports = router;

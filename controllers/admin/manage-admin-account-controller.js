@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const Admin = require('../../models/admin-model');
+const Admin = require('../../models/Users/admin-model');
 
 // Update admin account { admin,authToken, updates body => updated admin }
 const updateAccount = async function (req, res) {

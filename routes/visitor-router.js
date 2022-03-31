@@ -1,9 +1,7 @@
 const express = require('express');
 
-const manageTestApplications = require('../controllers/visitor/manage-tests-controller');
+
 const joinUsController = require('../controllers/visitor/join-us-controller');
-const partnerController = require('../controllers/visitor/manage-partner-controller');
-const manageMoovobrainOrdersController = require('../controllers/visitor/manageOrdersController');
 const manageContactUsController = require('../controllers/visitor/manage-contact-us-controller');
 const router = new express.Router();
 

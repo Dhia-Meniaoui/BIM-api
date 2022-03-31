@@ -1,5 +1,5 @@
 const multer = require('multer');
-const TeamMember = require('../../models/team-member-model');
+const TeamMember = require('../../models/Users/Team-Member-model');
 
 const fileStorage = multer.diskStorage({
     destination: ((req, file, callback) => {

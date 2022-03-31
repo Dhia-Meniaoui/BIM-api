@@ -22,7 +22,7 @@ const uploadImage = multer({
 });
 
 // Add accessorie  { admin,authToken,accessorie => none }
-const addAccessorie = async function (req, res) {
+const addOfferRequest = async function (req, res) {
     try {
         const imageURL = [];
         // console.log(req.files);
@@ -38,7 +38,7 @@ const addAccessorie = async function (req, res) {
 };
 
 // This function will catch the errors thrown by uploadImage() function , it must have 4 parameters
-const addAccessorieErrorCatcher = function (error, req, res, next) {
+const addOfferRequestErrorCatcher = function (error, req, res, next) {
     res.status(400).send({error: error.message});
 };
 
@@ -67,7 +67,7 @@ const getAllAccessories = async function (req, res) {
 };
 
 // Update accessorie  { admin,authToken,accessorie's ID , update body => updated accessorie }
-const updateAccessorie = async function (req, res) {
+const updateOfferRequest = async function (req, res) {
     const updatesAllowed = ['name', 'description', 'price', 'isAvailable'];
     const updatesRequested = Object.keys(req.body);
     const isValidUpdate = updatesRequested.every((update) => {
@@ -91,7 +91,7 @@ const updateAccessorie = async function (req, res) {
 }
 
 // Delete accessorie  { admin,authToken,accessorie's ID => none }
-const deleteAccessorie = async function (req, res) {
+const deleteOfferRequest = async function (req, res) {
     try {
         const deletedAccessorie = await Accessorie.findByIdAndDelete(req.params.id);
         deletedAccessorie ? res.status(200).send() : res.status(404).send();
@@ -102,10 +102,10 @@ const deleteAccessorie = async function (req, res) {
 
 module.exports = {
     uploadImage,
-    addAccessorie,
-    addAccessorieErrorCatcher,
-    getOneAccessorie,
+    addOfferRequest,
+    addOfferRequestErrorCatcher,
+    getOneOfferRequest,
     getAllAccessories,
-    deleteAccessorie,
-    updateAccessorie
+    deleteOfferRequest,
+    updateOfferRequest
 }

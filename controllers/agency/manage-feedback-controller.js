@@ -1,11 +1,11 @@
 const Feedback = require('../../models/Notifications/feedback-model');
 
-// Get feedback  { client,authToken => feedback }
+// Get feedback  { user,authToken => feedback }
 const getFeedback = async function (req, res) {
     try {
-        await req.client.populate('feedback').execPopulate();
-        console.log(req.client.feedback);
-        const feedback = req.client.feedback;
+        await req.user.populate('feedback').execPopulate();
+        console.log(req.user.feedback);
+        const feedback = req.user.feedback;
         if (!feedback) {
             return res.status(404).send();
         }
@@ -15,16 +15,5 @@ const getFeedback = async function (req, res) {
     }
 };
 
-// Post a feedback  { client,authToken,feedback => none }
-const addFeedback = async function (req, res) {
-    const owner = req.client._id
-    const feedback = new Feedback({...req.body, owner})
-    try {
-        await feedback.save();
-        res.status(200).send();
-    } catch (error) {
-        res.status(400).send();
-    }
-};
 
-module.exports = {getFeedback,addFeedback}
+module.exports = {getFeedback}

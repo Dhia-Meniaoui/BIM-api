@@ -3,12 +3,12 @@ const express = require('express');
 const authAdmin = require('../middleware/authentication').authAdmin;
 const signController = require('../controllers/admin/sign-up-login-logout-controller');
 const manageAdminAccountController = require('../controllers/admin/manage-admin-account-controller');
-const UsersManagementController = require('../controllers/admin/manage-clients-controller');
-const AgenciesManagementController = require('../controllers/admin/manage-tests-controller');
+const UsersManagementController = require('../controllers/admin/manage-users-controller');
+const AgenciesManagementController = require('../controllers/admin/manage-agencies-controller');
 const manageJoinUsController = require('../controllers/admin/manage-join-us-controller');
 const manageArticlesController = require('../controllers/admin/manage-articles-controller');
 const manageTeamMembersController = require('../controllers/admin/manage-team-members-controller');
-const manageOffersController = require('../controllers/user/manage-offers-controller');
+const manageOffersController = require('../controllers/admin/manage-offers-controller');
 const manageContactUsController = require('../controllers/visitor/manage-contact-us-controller');
 
 const router = new express.Router();
@@ -41,9 +41,9 @@ router.patch('/admin', authAdmin, manageAdminAccountController.updateAccount);
 // Ban a user
 router.post('/Users/ban/:id', authAdmin, UsersManagementController.banUser);
 
-// delete a user
+/* // delete a user
 router.delete('/Users/delete/:id', authAdmin, UsersManagementController.deleteUser);
-
+ */
 /* =============================
     Manage agency 
    =============================*/
@@ -51,12 +51,12 @@ router.delete('/Users/delete/:id', authAdmin, UsersManagementController.deleteUs
 // Ban an agency
 router.post('/Agencies/ban/:id', authAdmin, AgenciesManagementController.banAgencie);
 
-// delete an agency
+/* // delete an agency
 router.delete('/agencies/delete/:id', authAdmin, AgenciesManagementController.deleteAgencie);
 
 // turn an agency to a partner
 router.patch('/agencies/partner/:id', authAdmin, AgenciesManagementController.partnerAgencie);
-
+ */
 
 /* =============================
     Manage joins-us applications
@@ -139,12 +139,12 @@ router.delete('/members/:id', authAdmin, manageTeamMembersController.deleteTeamM
     Manage prediction
    =============================*/
 
-// get an offer prediction 
+/* // get an offer prediction 
 router.get('/predictions/:id', authAdmin, manageoffersprediction.getpredictionRequests);
 
 // set a prediction request to the lambda function AWS
 router.post('/prediction/offer/:id', authAdmin, manageoffersprediction.postpredictionRequests);
-
+ */
 
 /* =============================
     Manage contact us messages
@@ -160,13 +160,16 @@ router.delete('/contacts/:id', authAdmin, manageContactUsController.deleteContac
     Manage offers
    =============================*/
 
-// update an offer request
-router.patch('/offers/:id', authAdmin, manageOffersController.updateOfferRequest);
-
 // Get all the offers 
-router.get('/offers', authAdmin, manageOffersController.getOffersRequest);
+router.get('/offers', authAdmin, manageOffersController.getAllOffers);
 
 // Get an offer 
-router.get('/offer/details/:id', authAdmin, manageOffersController.getOfferRequest);
+router.get('/offer/details/:id', authAdmin, manageOffersController.getOneOffer);
+
+// Delete an offer 
+router.delete('/offer/:id', authAdmin, manageOffersController.deleteOffer);
+
+// Add an offer request
+router.post('/offer', authAdmin, manageOffersController.addOffer);
 
 module.exports = router;

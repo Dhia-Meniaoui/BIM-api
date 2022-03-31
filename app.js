@@ -32,9 +32,9 @@ app.use('/images/articles', express.static(path.join(__dirname, 'public/images/a
 app.use('/join-us/cv', express.static(path.join(__dirname, 'public/join-us-cv')));
 
 
-app.use(userRouter);
-app.use(agencyRouter);
-app.use(adminRouter);
-app.use(visitorRouter);
+app.use('/users',userRouter);
+app.use('/agency',agencyRouter);
+app.use('/admin',adminRouter);
+app.use('/visitor',visitorRouter);
 
 app.listen(port);

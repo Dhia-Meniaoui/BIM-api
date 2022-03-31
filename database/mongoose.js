@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 
 // connecting to database
 mongoose.connect('mongodb://localhost:27017/BIM-api', {
-    useNewUrlParser: true,
-    useCreateIndex: true
+    useUnifiedTopology: true,useNewUrlParser: true
 }).then(() => {
     console.log('Connected to database successfully');
 }).catch(() => {

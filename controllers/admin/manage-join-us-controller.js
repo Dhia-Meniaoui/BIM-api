@@ -1,7 +1,6 @@
 const path = require('path');
 
 const Joiner = require('../../models/Notifications/join-us-model');
-const partner = require('../../models/partenaire');
 
 // Get a cv PDF file  { admin,authToken, application id => cv pdf }
 const getCvPdfFile = async function (req, res) {
