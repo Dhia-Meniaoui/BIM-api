@@ -5,7 +5,7 @@ const validator = require('validator').default;
 
 
 const userSchema = new mongoose.Schema({
-    name: {
+    username: {
         type: String,
         required: true,
         trim: true,
@@ -79,9 +79,9 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-// Find by email and check password
-userSchema.statics.findByCredentials = async function (email, password) {
-    const user = await user.findOne({email: email});
+// Find by username and check password
+userSchema.statics.findByCredentials = async function (username, password) {
+    const user = await User.findOne({username: username});
     if (!user) {
         throw new Error('Unable to login');
     }
@@ -89,7 +89,7 @@ userSchema.statics.findByCredentials = async function (email, password) {
     if (!isMatch) {
         throw new Error('Unable to login');
     }
-    // reaching this line means that email exists with the given password
+    // reaching this line means that username exists with the given password
     return user;
 };
 

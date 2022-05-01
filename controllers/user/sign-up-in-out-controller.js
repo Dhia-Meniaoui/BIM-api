@@ -15,10 +15,10 @@ const signUp = async function (req, res) {
     }
 };
 
-// Sign in a user  { email,password => user info,token }
+// Sign in a user  { username,password => user info,token }
 const signIn = async function (req, res) {
     try {
-        const user = await User.findByCredentials(req.body.email, req.body.password);
+        const user = await User.findByCredentials(req.body.username, req.body.password);
         if (user.isBanned) {
             throw new Error('This account has been banned')
         }
