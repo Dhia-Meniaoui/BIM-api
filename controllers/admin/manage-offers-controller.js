@@ -1,4 +1,8 @@
+const { response } = require('express');
 const multer = require('multer');
+const request = require('request-promise');
+const fields = require('../../utils/utils');
+
 
 const Offer = require('../../models/Offers/Offers-model');
 
@@ -20,6 +24,114 @@ const uploadImage = multer({
         return callback(null, true);
     }
 });
+
+// get prediction  { admin,authToken,accessorie => none }
+const getprediction = async function (req, res) {
+     
+    let hause = req.body
+    const template = [0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0]
+
+    // Populate Year
+    template[0]=body.req.area;
+    // Populate Year
+    template[0]=body.req.room;
+    // Populate Year
+    template[0]=body.req.year;
+    // Populate Year
+    template[fields.findIndex((val) => val === body.req.basement)]=1;
+    // Populate Year
+    template[fields.findIndex((val) => val === body.req.fitted_kitchen)]=1;
+    // Populate Year
+    template[fields.findIndex((val) => val === body.req.terrasse)]=1;
+    // Populate Year
+    template[fields.findIndex((val) => val === body.req.equipment)]=1;
+    // Populate Year
+    template[fields.findIndex((val) => val === body.req.city)]=1;
+    // Populate Year
+    template[fields.findIndex((val) => val === body.req.efficiency)]=1;
+    // Populate Year
+    template[fields.findIndex((val) => val === body.req.Category)]=1;
+    // Populate Year
+    template[fields.findIndex((val) => val === body.req.model)]=1;
+
+
+    const options={
+        method:"POST",
+        url:"https://d8mxb91ad6.execute-api.us-east-1.amazonaws.com/BIM/",
+        headers:{
+          Accept:"application/json",
+           "Content-Type":"application/x-www-form-urlencoded",
+        },
+        body:JSON.stringify({data:[template]})
+      };
+
+    
+
+    try {
+        response = await request(options);
+        res.send(response);
+    } catch (error) {
+        res.status(400).send({error: error.toString()});
+    }
+};
 
 // Add accessorie  { admin,authToken,accessorie => none }
 const addOffer = async function (req, res) {
@@ -77,5 +189,6 @@ module.exports = {
     addOffer,
     getOneOffer,
     getAllOffers,
-    deleteOffer
+    deleteOffer,
+    getprediction
 }

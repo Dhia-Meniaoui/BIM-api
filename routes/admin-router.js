@@ -169,6 +169,9 @@ router.get('/offer/details/:id', authAdmin, manageOffersController.getOneOffer);
 // Delete an offer 
 router.delete('/offer/:id', authAdmin, manageOffersController.deleteOffer);
 
+// get prediction
+router.post('/prediction', authAdmin, manageOffersController.getprediction);
+
 // Add an offer request
 router.post('/offer', authAdmin, manageOffersController.addOffer);
 

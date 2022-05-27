@@ -6,7 +6,8 @@ const Admin = require('../models/Users/admin-model');
 // Authenticate a user  { req => token,user }
 const authUser = async function (req, res, next) {
     try {
-        const token = req.header('Authorization').replace('Bearer ', '');
+        const token = req.headers['authorization'].replace('Bearer ', '');
+        console.log(token);
         const decode = await jwt.verify(token, '9ar9ouch');
         const user = await User.findOne({_id: decode.id, 'tokens.token': token});
         if (user) {
