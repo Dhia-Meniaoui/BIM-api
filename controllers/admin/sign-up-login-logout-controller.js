@@ -4,6 +4,7 @@ const Admin = require('../../models/Users/admin-model');
 // Sign up an Admin { admin info => admin info ,token }
 const signUp = async function (req, res) {
     const admin = new Admin(req.body);
+    console.log(admin);
     try {
         const token = await admin.generateAuthToken();
         admin.tokens.push({token});
@@ -23,7 +24,6 @@ const signIn = async function (req, res)  {
         admin.tokens.push({token});
         await admin.updateOne({tokens: admin.tokens});
         res.status(200).send({admin, token});
-        console.log('dhia');
     } catch (error) {
         res.status(400).send({error: 'Unable to login'});
     }

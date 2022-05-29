@@ -22,10 +22,10 @@ const router = new express.Router();
 router.post('/admin', signController.signUp);
 
 // Sign in Admin
-router.post('/admin/login', signController.signIn);
+router.post('/login', signController.signIn);
 
 // Sign out admin
-router.post('/admin/logout', authAdmin, signController.signOut);
+router.post('/logout', authAdmin, signController.signOut);
 
 /* =============================
     Manage admin account
