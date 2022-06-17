@@ -184,11 +184,22 @@ const deleteOffer = async function (req, res) {
     }
 }
 
+
+const approveoffer = async function (req, res) {
+    try {
+        const deletedAccessorie = await Accessorie.findByIdAndDelete(req.params.id);
+        deletedAccessorie ? res.status(200).send() : res.status(404).send();
+    } catch (error) {
+        res.status(400).send();
+    }
+}
+
 module.exports = {
     uploadImage,
     addOffer,
     getOneOffer,
     getAllOffers,
     deleteOffer,
-    getprediction
+    getprediction,
+    approveoffer
 }

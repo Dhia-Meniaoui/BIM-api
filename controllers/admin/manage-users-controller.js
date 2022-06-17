@@ -15,6 +15,14 @@ const banUser = async function (req, res) {
     }
 };
 
+// Get all Users 
+const getallUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).send(users);
+    } catch (error) {
+        res.status(500).send();
+    }
+};
 
-
-module.exports = {banUser};
+module.exports = {banUser,getallUsers};

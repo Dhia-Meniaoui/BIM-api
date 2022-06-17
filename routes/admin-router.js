@@ -41,6 +41,9 @@ router.patch('/admin', authAdmin, manageAdminAccountController.updateAccount);
 // Ban a user
 router.post('/Users/ban/:id', authAdmin, UsersManagementController.banUser);
 
+// get users
+router.get('/Users', authAdmin, UsersManagementController.getallUsers);
+
 /* // delete a user
 router.delete('/Users/delete/:id', authAdmin, UsersManagementController.deleteUser);
  */
@@ -171,6 +174,9 @@ router.delete('/offer/:id', authAdmin, manageOffersController.deleteOffer);
 
 // get prediction
 router.post('/prediction', authAdmin, manageOffersController.getprediction);
+
+// approve an offer 
+router.patch('/approve/:id', authAdmin, manageOffersController.approveoffer);
 
 // Add an offer request
 router.post('/offer', authAdmin, manageOffersController.addOffer);

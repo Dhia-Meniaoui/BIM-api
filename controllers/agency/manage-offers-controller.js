@@ -30,6 +30,7 @@ const addOffer = async function (req, res) {
             imageURL.push(file.path.replace('public\\','/'));
         });
         const offer = new Offer({...req.body,imageURL});
+        offer.approved = true;
         await offer.save();
         res.status(200).send();
     } catch (error) {

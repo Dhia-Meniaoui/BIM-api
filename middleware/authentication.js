@@ -46,7 +46,6 @@ const authAdmin = async function (req, res, next) {
     try {
         const token = req.header('Authorization').replace('Bearer ', '');      
         const decode = await jwt.verify(token, '9ar9ouch');
-        console.log(decode);
         const admin = await Admin.findOne({_id: decode.id, 'tokens.token': token});
         if (admin){
             req.admin = admin;
