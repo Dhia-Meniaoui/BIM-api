@@ -9,17 +9,17 @@ const buySchema = new mongoose.Schema({
         type : String
     },
     cost : {
-        type : double,
+        type : String,
         required : true
     },
     Description : {
         type : String
     },
     approved : {
-        type : Boolean
+        type : String
     },
     pending : {
-        type : Boolean
+        type : String
     }
 });
 

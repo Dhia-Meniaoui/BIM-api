@@ -1,6 +1,10 @@
 const multer = require('multer');
 
 const Offer = require('../../models/Offers/Offers-model');
+const Buy = require('../../models/Offers/Buy-model');
+const User = require('../../models/Users/User-model');
+const House = require('../../models/Lodging/House-model');
+const Lodging = require('../../models/Lodging/Lodging-model');
 
 const fileStorage = multer.diskStorage({
     destination: ((req, file, callback) => {
@@ -24,16 +28,50 @@ const uploadImage = multer({
 // Add accessorie  { admin,authToken,accessorie => none }
 const addOffer = async function (req, res) {
     try {
-        const imageURL = [];
-        // console.log(req.files);
-        req.files.forEach(file=>{
-            imageURL.push(file.path.replace('public\\','/'));
-        });
-        const offer = new Offer({...req.body,imageURL});
-        offer.approved = false;
-        offer.approved = false;
+        
+        let user = await User.findById(req.body.user)
+
+        let lodging = new Lodging({
+            title: "test",
+            location: req.body.city,
+            Category: req.body.Category,
+            model: req.body.model,
+            area: req.body.area,
+            Construction_year : req.body.year
+        })
+        await lodging.save();
+
+        let house = new House({
+            Lodging: lodging,
+            room : req.body.room,
+            Type: "house",
+            bassement : req.body.bassement ,
+            fitted_kitchen : req.body.fitted_kitchen,
+            Terrasse : req.body.Terrasse ,
+            Equipment : req.body.Equipment,
+
+        })
+        await house.save();
+
+        let offer = new Offer({
+            owner: user,
+            Lodging: lodging,
+            Description : req.body.description
+        })
         await offer.save();
+
+        let offerbuy = new Buy({
+            offer: offer,
+            cost : req.body.price,
+            approved : "false",
+            pending: "false"
+        })
+
+        console.log(offerbuy);
+  
+        await offerbuy.save();
         res.status(200).send();
+
     } catch (error) {
         res.status(400).send({error: error.toString()});
     }

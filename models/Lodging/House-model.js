@@ -6,12 +6,8 @@ const houseSchema = new mongoose.Schema({
             ref: 'Lodging'
     },
     room : {
-        type : integer,
+        type : String,
         required : true
-    },
-    living_space : {
-        type : double,
-        required : true,
     },
     Type : {
         type : String,

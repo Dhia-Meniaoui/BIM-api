@@ -9,9 +9,6 @@ const OfferSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Lodging'
     },
-    Furnishing : {
-        type : String
-    },
     Postion : {
         type : String
     },
@@ -19,8 +16,7 @@ const OfferSchema = new mongoose.Schema({
         type : String
     },
     images : {
-        type : String,
-        required : true
+        type : String
     }
 }, {timestamps: true});
 

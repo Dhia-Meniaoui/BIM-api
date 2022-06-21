@@ -1,28 +1,34 @@
 const mongoose = require('mongoose');
 
 const lodgingSchema = new mongoose.Schema({
-    title : {
+    title: {
+        type : String,
+        trim : true
+    },
+    location: {
         type : String,
         required : true,
         trim : true
     },
-    location : {
+    Category: {
         type : String,
         required : true,
         trim : true
     },
-    state : {
+    model: {
         type : String,
         required : true,
         trim : true
     },
-    area : {
-        type : double,
+    area: {
+        type : String,
         required : true,
+        trim : true
     },
-    Construction_year : {
-        type : integer,
-        required : true
+    Construction_year: {
+        type : String,
+        required : true,
+        trim : true
     }
 } , {timestamps : true});
 

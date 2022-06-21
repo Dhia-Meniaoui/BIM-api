@@ -20,7 +20,7 @@ router.post('/users/login', signController.signIn);
 router.post('/users', signController.signUp);
 
 // Sign out a user
-router.post('/users/logout', authUser, signController.signOut);
+router.post('/users/logout', signController.signOut);
 
 
 /* ============================= 
