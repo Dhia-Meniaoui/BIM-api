@@ -18,9 +18,9 @@ const rentSchema = new mongoose.Schema({
 });
 
 rentSchema.methods.toJSON = function () {
-const houseObject = this.toObject();
-delete houseObject.__v;
-return houseObject;
+const rentObject = this.toObject();
+delete rentObject.__v;
+return rentObject;
 }
 
 const Rent = mongoose.model('Rent',rentSchema);

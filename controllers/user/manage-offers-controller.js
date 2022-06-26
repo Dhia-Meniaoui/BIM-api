@@ -41,21 +41,23 @@ const addOffer = async function (req, res) {
         })
         await lodging.save();
 
+        console.log(req.body);
+
         let house = new House({
             Lodging: lodging,
             room : req.body.room,
-            Type: "house",
-            bassement : req.body.bassement ,
+            efficiency_class : req.body.efficiency_class,
+            basement : req.body.basement ,
             fitted_kitchen : req.body.fitted_kitchen,
-            Terrasse : req.body.Terrasse ,
-            Equipment : req.body.Equipment,
+            terrasse : req.body.terrasse ,
+            equipment : req.body.equipment,
 
         })
         await house.save();
 
         let offer = new Offer({
             owner: user,
-            Lodging: lodging,
+            House: house,
             Description : req.body.description
         })
         await offer.save();

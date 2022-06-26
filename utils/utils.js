@@ -1,4 +1,4 @@
-const fields = [
+export const fields = [
     "area",
     "room",
     "year",

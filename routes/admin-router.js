@@ -166,13 +166,16 @@ router.delete('/contacts/:id', authAdmin, manageContactUsController.deleteContac
 // Get all the offers 
 router.get('/offers', authAdmin, manageOffersController.getAllOffers);
 
+// Get all the buy offers 
+router.get('/offersbuy', authAdmin, manageOffersController.getAllbuyoffers);
+
 // Get an offer 
 router.get('/offer/details/:id', authAdmin, manageOffersController.getOneOffer);
 
 // Delete an offer 
 router.delete('/offer/:id', authAdmin, manageOffersController.deleteOffer);
 
-// get prediction
+// post prediction
 router.post('/prediction', authAdmin, manageOffersController.getprediction);
 
 // approve an offer 

@@ -9,12 +9,23 @@ const houseSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    Type : {
+    efficiency_class : {
         type : String,
-        required : true, 
-        trim : true
+        required : true
+    },
+    basement : {
+        type : String
+    },
+    fitted_kitchen : {
+        type : String
+    },
+    terrasse : {
+        type : String
+    },
+    equipment : {
+        type : String
     }
-});
+}, {timestamps : true});
 
 houseSchema.methods.toJSON = function () {
 const houseObject = this.toObject();

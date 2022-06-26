@@ -24,9 +24,9 @@ const buySchema = new mongoose.Schema({
 });
 
 buySchema.methods.toJSON = function () {
-const houseObject = this.toObject();
-delete houseObject.__v;
-return houseObject;
+const buyObject = this.toObject();
+delete buyObject.__v;
+return buyObject;
 }
 
 const Buy = mongoose.model('Buy',buySchema);

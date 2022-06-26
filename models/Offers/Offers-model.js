@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const OfferSchema = new mongoose.Schema({
     owner: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-    },
-    Lodging: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Lodging'
+        ref: 'User'
+    },
+    House: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'House'
     },
     Postion : {
         type : String
@@ -21,9 +21,9 @@ const OfferSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 OfferSchema.methods.toJSON = function () {
-const houseObject = this.toObject();
-delete houseObject.__v;
-return houseObject;
+const offerObject = this.toObject();
+delete offerObject.__v;
+return offerObject;
 }
 
 const Offer = mongoose.model('Offer',OfferSchema);
