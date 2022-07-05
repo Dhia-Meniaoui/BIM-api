@@ -34,16 +34,19 @@ const signIn = async function (req, res) {
 
 // Sign out a user  { user,authToken => none }
 const signOut =  async function (req, res) {
+    console.log(req.body.token);
     try {
-        let userTokens = req.user.tokens;
+        const user = await User.findById(req.body.user.id);
+        console.log(user);
+        let userTokens = user.tokens;
         userTokens = userTokens.filter((token) => {
             return token.token !== req.token;
         });
-        await req.user.updateOne({tokens: userTokens});
+        await user.updateOne({tokens: userTokens});
         res.status(200).send();
     } catch (error) {
-        res.status(500).send();
-    }
+    res.status(500);
+}
 };
 
 module.exports = {signUp,signIn,signOut}

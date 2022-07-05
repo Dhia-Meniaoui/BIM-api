@@ -178,7 +178,7 @@ const getprediction = async function (req, res) {
 
     const options={
         method:"POST",
-        url:"https://76y10jzgmb.execute-api.eu-central-1.amazonaws.com/BIM/",
+        url:"https://5ydcj8uw86.execute-api.eu-central-1.amazonaws.com/BIM/",
         headers:{
           Accept:"application/json",
            "Content-Type":"application/x-www-form-urlencoded",
@@ -277,12 +277,9 @@ const deleteOffer = async function (req, res) {
 
 
 const approveoffer = async function (req, res) {
-    try {
-        const deletedAccessorie = await Accessorie.findByIdAndDelete(req.params.id);
-        deletedAccessorie ? res.status(200).send() : res.status(404).send();
-    } catch (error) {
-        res.status(400).send();
-    }
+    console.log(req.body.data._id);
+    const updatedOffer = await Buy.findByIdAndUpdate(req.body.data._id, {approved : true});
+    updatedOffer ? res.status(200).send(updatedOffer) : res.status(404).send();
 }
 
 module.exports = {

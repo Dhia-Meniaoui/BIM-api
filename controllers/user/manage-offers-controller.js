@@ -79,6 +79,15 @@ const addOffer = async function (req, res) {
     }
 };
 
+
+const shareoffer = async function (req, res) {
+    console.log(req.body);
+    console.log(req.body.offer.offerbuy._id);
+    const updatedOffer = await Buy.findByIdAndUpdate(req.body.offer.offerbuy._id, {pending : true});
+    updatedOffer ? res.status(200).send(updatedOffer) : res.status(404).send();
+}
+
+
 // This function will catch the errors thrown by uploadImage() function , it must have 4 parameters
 const addOfferRequestErrorCatcher = function (error, req, res, next) {
     res.status(400).send({error: error.message});
@@ -101,8 +110,20 @@ const getOneOffer = async function (req, res) {
 // Get all accessories  { none => accessories }
 const getAllOffers = async function (req, res) {
     try {
-        const Offers = await Offer.find().sort({createdAt: 'asc'});
-        res.status(200).send(Offers);
+        const buy = await Buy.find()
+        .populate({
+            path:"offer",
+            populate: {path : "House", populate:{path:"Lodging"}}
+        })
+        .populate({
+            path:"offer",
+            populate: {path : "owner"}
+        })
+
+
+
+
+        res.status(200).send(buy);
     } catch (error) {
         res.status(500).send();
     }
@@ -149,5 +170,6 @@ module.exports = {
     getOneOffer,
     getAllOffers,
     deleteOffer,
-    updateOffer
+    updateOffer,
+    shareoffer
 }

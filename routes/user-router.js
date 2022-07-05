@@ -50,14 +50,14 @@ router.get('/feedback/:id', authUser, manageFeedbackController.getFeedback);
     Manage offers
    =============================*/
 
-// update an offer request
-router.patch('/offers/:id', authUser, manageOffersController.updateOffer);
+// share an offer and update the 
+router.post('/offers/share', authUser, manageOffersController.shareoffer);
 
 // Add an offer request
 router.post('/offer', authUser, manageOffersController.addOffer);
 
 // Get all the offers 
-router.get('/offers', authUser, manageOffersController.getAllOffers);
+router.get('/offers',  manageOffersController.getAllOffers);
 
 // Get an offer 
 router.get('/offer/details/:id', authUser, manageOffersController.getOneOffer);

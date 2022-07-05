@@ -179,7 +179,7 @@ router.delete('/offer/:id', authAdmin, manageOffersController.deleteOffer);
 router.post('/prediction', authAdmin, manageOffersController.getprediction);
 
 // approve an offer 
-router.patch('/approve/:id', authAdmin, manageOffersController.approveoffer);
+router.post('/approveoffer', authAdmin, manageOffersController.approveoffer);
 
 // Add an offer request
 router.post('/offer', authAdmin, manageOffersController.addOffer);
